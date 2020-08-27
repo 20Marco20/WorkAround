@@ -4,9 +4,297 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkAround"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" Height="285" Width="300" ResizeMode="NoResize" ShowInTaskbar="True" Topmost="True" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0,0" MappingMode="RelativeToBoundingBox" StartPoint="1,1">
+            <GradientStop Color="#FF6F6E6E"/>
+            <GradientStop Color="#FF333333" Offset="0.5"/>
+            <GradientStop Color="#FF6B6B6B" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2" FillBehavior="HoldEnd"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Window.Resources>
+        <Style x:Key="StyleButton" TargetType="{x:Type Button}">
+            <Setter Property="FontFamily" Value="Arial Narrow"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="19"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="BorderBrush" Value="#FF10C5FF"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Romantic"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+    </Window.Resources>
+
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="18"/>
+            <ColumnDefinition Width="270*"/>
+            <ColumnDefinition Width="18"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="240*"/>
+            <RowDefinition Height="22"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="3">
+            <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="cmdMinimieren" Style="{StaticResource StyleButton}" Content="_" Click="CmdMinimieren_Click" Margin="0,0,2,0" ToolTip="Minimieren"/>
+                <Button x:Name="cmdBeenden"    Style="{StaticResource StyleButton}" Content="X" Click="CmdBeenden_Click" Foreground="Black" BorderBrush="{x:Null}" ToolTip="Beenden">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFFFC4C4" Offset="0"/>
+                            <GradientStop Color="Red" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </DockPanel>
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3">
+            <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="btnNeueAufgabe" Content="+" Style="{StaticResource StyleButton}" ToolTip="Neue Aufgabe" Click="BtnNeueAufgabe_Click">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="B3">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="spNew">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="spNew">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="154"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="98"/>
+                                    </DoubleAnimationUsingKeyFrames>
+
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.6" FillBehavior="HoldEnd" Storyboard.TargetName="btnNeueAufgabe"/>
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button x:Name="btnCalender" Width="46" Margin="5,0,5,0" Click="BtnCalender_Click" Style="{StaticResource StyleButton}" ToolTip="Kalender öffnen">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="B1">
+
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.6" FillBehavior="HoldEnd" Storyboard.TargetName="gridTextbox"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.6" FillBehavior="HoldEnd" Storyboard.TargetName="btnCalender"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" FillBehavior="HoldEnd" Storyboard.TargetName="btnCalenderOff"/>
+
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="cKalender">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="180"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="-240"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="cKalender">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="0"/>
+                                    </DoubleAnimationUsingKeyFrames>
+
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </DockPanel>
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Grid.RowSpan="3">
+            <DockPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="btnCalenderOff" Content="Zurück" Width="46" Margin="5,0,5,0" Click="BtnCalender_Click" FontSize="12" Visibility="Hidden" Style="{StaticResource StyleButton}" ToolTip="Kalender schließen">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="B2">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="cKalender">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="-240"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="180"/>
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="cKalender">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+                                    </DoubleAnimationUsingKeyFrames>
+
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1.5" FillBehavior="HoldEnd" Storyboard.TargetName="gridTextbox"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.8" FillBehavior="HoldEnd" Storyboard.TargetName="btnCalenderOff"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8" FillBehavior="HoldEnd" Storyboard.TargetName="btnCalender"/>
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </DockPanel>
+        </Grid>
+
+        <Calendar x:Name="cKalender" Grid.Column="1" Grid.Row="1" SelectionMode="SingleRange" Margin="0,25,-480,0" FontFamily="Arial Narrow" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+            <Calendar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Calendar.RenderTransform>
+            <Calendar.Effect>
+                <DropShadowEffect/>
+            </Calendar.Effect>
+            <Calendar.Background>
+                <LinearGradientBrush EndPoint="0,1" SpreadMethod="Repeat">
+                    <GradientStop Color="#FFF1A9FB" Offset="0"/>
+                    <GradientStop Color="#FFECF0F4" Offset="0.16"/>
+                    <GradientStop Color="#FFFCFCFD" Offset="0.16"/>
+                    <GradientStop Color="#FFF05C5C" Offset="1"/>
+                </LinearGradientBrush>
+            </Calendar.Background>
+        </Calendar>
+
+
+        <Grid x:Name="gridTextbox" Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="4"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="4"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="80*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="tbUhr"   Grid.Column="1" Grid.Row="0" FontSize="32"/>
+            <TextBox x:Name="tbDatum" Grid.Column="1" Grid.Row="2" FontSize="20"/>
+            <TextBox x:Name="tbKW"    Grid.Column="1" Grid.Row="4" FontSize="18"/>
+
+            <Rectangle Grid.Column="1" Grid.Row="6">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0,0" StartPoint="1,1">
+                        <GradientStop Color="#FF0074FF" Offset="0"/>
+                        <GradientStop Color="#FF10C5FF" Offset="0.5"/>
+                        <GradientStop Color="#FF0074FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <ListBox x:Name="listboxAufgaben" Grid.Column="0" Grid.Row="8" HorizontalContentAlignment="Stretch" MouseDoubleClick="ListboxAufgaben_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="120" VerticalAlignment="Top" SelectionMode="Extended">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="222"/>
+                                <ColumnDefinition Width="0"/>
+                                <ColumnDefinition Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14"/>
+                            <!--<Button x:Name="btnAufgabeLoeschen" Grid.Column="2" Height="22" Click="BtnAufgabeLoeschen_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <StackPanel>
+                                    <Image Source="Delete.gif"/>
+                                </StackPanel>
+                            </Button>-->
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+
+        <StackPanel x:Name="spNew" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Height="46" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="164"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+
+            <TextBox x:Name="tbNew" Width="195" Background="Gray" Margin="1" IsEnabled="True" Padding="4,1" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Left" SelectionBrush="{x:Null}" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="36"/>
+
+
+
+
+            <Button x:Name="btnNew" Width="28" Height="28" Style="{StaticResource StyleButton}" Foreground="Black" Margin="1,1,1,1" Click="BtnNew_Click">
+                <StackPanel>
+                    <Image Source="Haeckchen.png"/>
+                </StackPanel>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="B5">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="spNew">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="spNew">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="98"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="164"/>
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" FillBehavior="HoldEnd" Storyboard.TargetName="btnNeueAufgabe"/>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <Button x:Name="btnReset" Width="28" Height="28" Style="{StaticResource StyleButton}" Foreground="Black" Margin="1" Click="BtnReset_Click">
+                <StackPanel>
+                    <Image Source="Delete.gif"/>
+                </StackPanel>
+
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="B4">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="spNew">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="spNew">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="98"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="164"/>
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" FillBehavior="HoldEnd" Storyboard.TargetName="btnNeueAufgabe"/>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+
+            </Button>
+        </StackPanel>
+
     </Grid>
 </Window>

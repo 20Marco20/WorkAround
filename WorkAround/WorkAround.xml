@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workaround>
+	<aufgaben>
+    		<user name="user1">
+			<aufgabe>Aufgabe 1.1</aufgabe>
+			<aufgabe>Aufgabe 1.2</aufgabe>
+			<aufgabe>Aufgabe 1.3</aufgabe>
+		</user>
+    		<user name="user2">
+			<aufgabe>Aufgabe 2.1</aufgabe>
+			<aufgabe>Aufgabe 2.2</aufgabe>
+			<aufgabe>Aufgabe 2.3</aufgabe>
+		</user>
+	</aufgaben>
+</workaround>
